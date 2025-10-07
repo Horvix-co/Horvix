@@ -1,0 +1,632 @@
+index.html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HORVIX | Premium Timepieces</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --dark-green: #1a472a;
+            --medium-green: #2d5a3d;
+            --light-green: #3a7550;
+            --accent-gold: #d4af37;
+            --text-light: #f5f5f5;
+        }
+        
+        body {
+            background-color: #0f1f15;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .language-btn {
+            background: var(--dark-green);
+            color: var(--text-light);
+            border: 1px solid var(--accent-gold);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--dark-green);
+            border: 1px solid var(--accent-gold);
+            border-radius: 4px;
+            width: 150px;
+            margin-top: 5px;
+        }
+        
+        .language-dropdown.show {
+            display: block;
+        }
+        
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .language-option:hover {
+            background: var(--medium-green);
+        }
+        
+        header {
+            background-color: var(--dark-green);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+        }
+        
+        .logo-text span {
+            color: var(--accent-gold);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-gold);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(26, 71, 42, 0.8), rgba(26, 71, 42, 0.9)), url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=1180&q=80') no-repeat center center/cover;
+            color: var(--text-light);
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent-gold);
+            color: var(--dark-green);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .btn:hover {
+            background: #e6c34c;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            color: var(--text-light);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-gold);
+        }
+        
+        .watches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .watch-card {
+            background: var(--dark-green);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .watch-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .watch-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: var(--medium-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 4rem;
+        }
+        
+        .watch-info {
+            padding: 1.5rem;
+        }
+        
+        .watch-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            color: var(--accent-gold);
+        }
+        
+        .watch-description {
+            margin-bottom: 1rem;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .watch-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .price {
+            font-weight: bold;
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: var(--dark-green);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-gold);
+        }
+        
+        footer {
+            background: var(--dark-green);
+            color: var(--text-light);
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent-gold);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-gold);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent-gold);
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: var(--accent-gold);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--medium-green);
+            border-radius: 50%;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: var(--accent-gold);
+            color: var(--dark-green);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--medium-green);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .watches-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .language-selector {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 10px auto;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <div class="language-btn" id="languageBtn">
+            <i class="fas fa-globe"></i>
+            <span>O'zbek</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="language-dropdown" id="languageDropdown">
+            <div class="language-option" data-lang="uz">
+                <i class="fas fa-check"></i>
+                <span>O'zbek</span>
+            </div>
+            <div class="language-option" data-lang="ru">
+                <i class="fas"></i>
+                <span>Русский</span>
+            </div>
+            <div class="language-option" data-lang="en">
+                <i class="fas"></i>
+                <span>English</span>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="logo-text">HORVIX <span>PREMIUM</span></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Bosh Sahifa</a></li>
+                        <li><a href="#watches">Kolleksiya</a></li>
+                        <li><a href="#about">Biz Haqimizda</a></li>
+                        <li><a href="#contact">Bog'lanish</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>HORVIX | Premium Timepieces</h1>
+            <p>Precision. Elegance. Power. Redefining luxury — one second at a time.</p>
+            <a href="#watches" class="btn">Kolleksiyani Ko'rish</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title" id="watches">Premium Kolleksiya</h2>
+        <div class="watches-grid">
+            <div class="watch-card">
+                <div class="watch-image">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <div class="watch-info">
+                    <div class="watch-title">Horvix Royal</div>
+                    <div class="watch-description">Eksklyuziv qimmatbaho toshlar bilan bezatilgan limited edition</div>
+                    <div class="watch-price">
+                        <span class="price">5 200 000 so'm</span>
+                        <a href="#" class="btn">Buyurtma</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="watch-card">
+                <div class="watch-image">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="watch-info">
+                    <div class="watch-title">Horvix Classic</div>
+                    <div class="watch-description">An'anaviy dizayn va zamonaviy texnologiyaning mukammal uyg'unligi</div>
+                    <div class="watch-price">
+                        <span class="price">2 500 000 so'm</span>
+                        <a href="#" class="btn">Buyurtma</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="watch-card">
+                <div class="watch-image">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="watch-info">
+                    <div class="watch-title">Horvix Explorer</div>
+                    <div class="watch-description">Sayohat va sarguzashtlar uchun maxsus dizayn</div>
+                    <div class="watch-price">
+                        <span class="price">3 800 000 so'm</span>
+                        <a href="#" class="btn">Buyurtma</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" id="about">Nima Uchun HORVIX?</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-award"></i>
+                </div>
+                <h3>Premium Sifat</h3>
+                <p>Har bir soat yuqori sifatli materiallardan tayyorlanadi va qat'iy sifat nazoratidan o'tadi</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Tez Yetkazish</h3>
+                <p>Buyurtmangiz 24 soat ichida O'zbekiston bo'ylab yetkazib beriladi</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>5 Yil Kafolat</h3>
+                <p>Barcha mahsulotlarimiz 5 yillik kafolat bilan ta'minlanadi</p>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>HORVIX PREMIUM</h3>
+                    <p>Biz hashamatni qayta ta'riflaymiz. Har bir soniya - bu san'at asari.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Tez Havolalar</h3>
+                    <ul>
+                        <li><a href="#home">Bosh Sahifa</a></li>
+                        <li><a href="#watches">Kolleksiya</a></li>
+                        <li><a href="#about">Biz Haqimizda</a></li>
+                        <li><a href="#contact">Bog'lanish</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Aloqa</h3>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <span>Toshkent, Uzbekistan</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <span>+998 90 123 45 67</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <span>info@horvix.uz</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 HORVIX Premium Timepieces. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('languageBtn').addEventListener('click', function() {
+            document.getElementById('languageDropdown').classList.toggle('show');
+        });
+        
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const selectedLang = this.getAttribute('data-lang');
+                
+                document.querySelectorAll('.language-option i.fa-check').forEach(icon => {
+                    icon.className = 'fas';
+                });
+                
+                this.querySelector('i').className = 'fas fa-check';
+                
+                document.querySelector('#languageBtn span').textContent = this.querySelector('span').textContent;
+                
+                document.getElementById('languageDropdown').classList.remove('show');
+                
+                console.log(`Til o'zgartirildi: ${selectedLang}`);
+            });
+        });
+        
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('#languageBtn') && !e.target.closest('#languageBtn')) {
+                const dropdown = document.getElementById('languageDropdown');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
